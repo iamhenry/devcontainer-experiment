@@ -1,0 +1,21 @@
+{
+    "image": "mcr.microsoft.com/devcontainers/typescript-node",
+    "features": {
+        "ghcr.io/devcontainers/features/common-utils:2": {},
+        "ghcr.io/devcontainers-contrib/features/tmux-apt-get:1": {},
+        "ghcr.io/devcontainers-extra/features/opencode:1": {
+            "version": "latest"
+        }
+    },
+    "mounts": [
+        "source=${localEnv:HOME}/.opencode,target=/home/node/.opencode,type=bind,consistency=cached",
+        "source=${localEnv:HOME}/.config/opencode,target=/home/node/.config/opencode,type=bind,consistency=cached",
+        "source=${localEnv:HOME}/.local,target=/home/node/.local,type=bind,consistency=cached",
+        "source=${localEnv:HOME}/bin,target=/home/node/bin,type=bind,consistency=cached",
+        "source=${localEnv:HOME}/.tmux.conf,target=/home/node/.tmux.conf,type=bind,consistency=cached"
+    ],
+    "postCreateCommand": "opencode --version 2>/dev/null || curl -fsSL https://opencode.ai/install.sh | sh",
+    "remoteEnv": {
+        "PATH": "/home/node/bin:${containerEnv:PATH}"
+    }
+}
