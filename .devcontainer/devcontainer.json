@@ -1,7 +1,14 @@
 {
     "image": "mcr.microsoft.com/devcontainers/typescript-node",
+    "remoteUser": "node",
+    "updateRemoteUserUID": true,
+    "userEnvProbe": "loginShell",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/${localWorkspaceFolderBasename},type=bind",
+    "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
     "features": {
-        "ghcr.io/devcontainers/features/common-utils:2": {},
+        "ghcr.io/devcontainers/features/common-utils:2": {
+            "configureZshAsDefaultShell": true
+        },
         "ghcr.io/devcontainers-contrib/features/tmux-apt-get:1": {},
         "ghcr.io/devcontainers-extra/features/opencode:1": {
             "version": "latest"
@@ -12,9 +19,10 @@
         "source=${localEnv:HOME}/.config/opencode,target=/home/node/.config/opencode,type=bind,consistency=cached",
         "source=${localEnv:HOME}/.local,target=/home/node/.local,type=bind,consistency=cached",
         "source=${localEnv:HOME}/bin,target=/home/node/bin,type=bind,consistency=cached",
-        "source=${localEnv:HOME}/.tmux.conf,target=/home/node/.tmux.conf,type=bind,consistency=cached"
+        "source=${localEnv:HOME}/.tmux.conf,target=/home/node/.tmux.conf,type=bind,consistency=cached",
+        "source=${localEnv:HOME}/.zshrc,target=/home/node/.zshrc,type=bind,consistency=cached"
     ],
-    "postCreateCommand": "opencode --version 2>/dev/null || curl -fsSL https://opencode.ai/install.sh | sh",
+    "postCreateCommand": "opencode --version 2>/dev/null || curl -fsSL https://opencode.ai/install.sh | sh && git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions 2>/dev/null || true && git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-completions 2>/dev/null || true",
     "remoteEnv": {
         "PATH": "/home/node/bin:${containerEnv:PATH}"
     }
